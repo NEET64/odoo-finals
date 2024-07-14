@@ -7,7 +7,8 @@ const BookCard2 = ({ book }) => {
     const promise = axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/v1/book/add`,
       {
-        book,
+        ...book,
+        image_url: book.imageUrl,
       }
     );
     toast.promise(promise, {

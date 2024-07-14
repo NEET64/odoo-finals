@@ -2,7 +2,7 @@ const BookCard1 = ({ book }) => {
   return (
     <div className="grid grid-cols-4 gap-2">
       <img
-        src={book.imageUrl}
+        src={book.image_url}
         className="border-2 border-black rounded-lg h-[100px] w-[80px]"
       />
       <div className="flex col-span-3 flex-col">

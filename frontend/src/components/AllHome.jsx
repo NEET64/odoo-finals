@@ -12,8 +12,10 @@ export const AllHome = () => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/v1/book/library`)
       .then((response) => {
-        setBooks(response.data);
-        console.log(response.data);
+        setBooks(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }, []);
 
