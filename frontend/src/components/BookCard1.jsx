@@ -3,7 +3,7 @@ const BookCard1 = ({ book }) => {
     <div className="grid grid-cols-4 gap-2">
       <img
         src={book.imageUrl}
-        className="border-2  border-black rounded-lg h-[100px] w-[80px]"
+        className="border-2 border-black rounded-lg h-[100px] w-[80px]"
       />
       <div className="flex col-span-3 flex-col">
         <h3 className="text-lg line-clamp-1 font-semibold">{book.title}</h3>

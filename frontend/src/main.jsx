@@ -8,6 +8,7 @@ import { RecoilRoot } from "recoil";
 import HomePage from "./pages/HomePage.jsx";
 import LoginForm from "./pages/Login.jsx";
 import SignupForm from "./pages/Signup.jsx";
+import AddBook from "./pages/AddBook.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignupForm />,
+      },
+      {
+        path: "/addBook",
+        element: <AddBook />,
       },
     ],
   },

@@ -1,6 +1,7 @@
 import BookCard1 from "./BookCard1";
 import { books } from "../../../data/books";
 import SearchBar from "./SearchBar";
+import BookList from "./BookList";
 
 export const AllHome = () => {
   return (
@@ -10,17 +11,13 @@ export const AllHome = () => {
         <div>
           <h2 className="text-2xl font-semibold pb-4">New Arrivals</h2>
           <div className="flex flex-col gap-2">
-            {books.map((book, index) => {
-              return <BookCard1 key={index} book={book} />;
-            })}
+            <BookList books={books} />
           </div>
         </div>
         <div>
           <h2 className="text-2xl font-semibold pb-4">Trendings</h2>
           <div className="flex flex-col gap-2">
-            {books.map((book, index) => {
-              return <BookCard1 key={index + book.title} book={book} />;
-            })}
+            <BookList books={books} />
           </div>
         </div>
       </div>

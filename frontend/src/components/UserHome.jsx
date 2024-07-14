@@ -1,11 +1,22 @@
 import { Mail, MapPin, Pencil, Phone } from "lucide-react";
+import SearchBar from "./SearchBar";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "@/atoms/userData";
+import BookList from "./BookList";
+import { books } from "../../../data/books";
 
 const UserHome = () => {
+  const user = useRecoilValue(userAtom);
   return (
     <>
-      <div className="grid md:grid-cols-3 flex-1 items-start">
-        <div className="col-span-2">{/* <SearchBar /> */}</div>
-        <div className="">
+      <div className="grid md:grid-cols-3 flex-1 items-start gap-2">
+        <div className="col-span-2">
+          <SearchBar />
+          <div className="max-w-lg grid items-center gap-2 ml-40">
+            <BookList books={books} />
+          </div>
+        </div>
+        <div className="my-8">
           <h2 className="text-2xl font-semibold border-b-2 my-2">
             User Profile
           </h2>
@@ -16,26 +27,24 @@ const UserHome = () => {
             />
             <div className="flex col-span-3 flex-col">
               <h3 className="text-lg line-clamp-1 font-semibold items-center">
-                John Doe
+                {user.userName}
               </h3>
-              <p>Admin</p>
+              <p>{user.role}</p>
             </div>
           </div>
           <div className="grid gap-2 m-4">
             <div className="flex gap-2 items-start">
               <MapPin size={20} />
-              <div className="leading-4">
-                123 1232, asdfasdf, fasdfasdf, asdfasdf
-              </div>
+              <div className="leading-4">{user.address}</div>
             </div>
 
             <div className="flex gap-2 items-center">
               <Phone size={20} />
-              <div>+91 9876543012</div>
+              <div>+91 {user.phone}</div>
             </div>
             <div className="flex gap-2 items-center">
               <Mail size={20} />
-              <div>mail@example.com</div>
+              <div>{user.email}</div>
             </div>
             <div className="flex gap-2 items-center">
               <Pencil size={20} />
