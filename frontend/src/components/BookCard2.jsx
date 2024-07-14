@@ -4,11 +4,13 @@ import axios from "axios";
 
 const BookCard2 = ({ book }) => {
   const handleAddToLibrary = () => {
+    console.log(book);
     const promise = axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/v1/book/add`,
       {
         ...book,
-        image_url: book.imageUrl,
+        image_url: book.image_url,
+        author: book.authors,
       }
     );
     toast.promise(promise, {

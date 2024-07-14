@@ -3,10 +3,25 @@ import SearchBar from "./SearchBar";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "@/atoms/userData";
 import BookList from "./BookList";
-import { books } from "../../../data/books";
+import { books as demoBooks } from "../../../data/books";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const UserHome = () => {
   const user = useRecoilValue(userAtom);
+  const [books, setBooks] = useState(demoBooks);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/v1/book/library`)
+      .then((response) => {
+        setBooks(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <>
       <div className="grid md:grid-cols-3 flex-1 items-start gap-2">

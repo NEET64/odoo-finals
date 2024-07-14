@@ -28,8 +28,6 @@ const bookSchema = new mongoose.Schema({
   description: String,
   image_url: {
     type: String,
-    default:
-      "https://res.cloudinary.com/dibsgcq9a/image/upload/v1716750907/book-world/sfx9lfhbj3pkxy0esxkk.jpg",
   },
 });
 
