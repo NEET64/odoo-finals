@@ -10,11 +10,8 @@ function App() {
 
       <div className="flex flex-col min-h-dvh sm:pl-14">
         <Header />
-        <SearchBar />
         <Outlet />
-
         {/* <div className="flex-1"></div> */}
-
         {/* <Footer /> */}
       </div>
     </div>
