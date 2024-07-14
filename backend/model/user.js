@@ -6,65 +6,63 @@ const Book = require("./book.js");
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
-    userName: {
-        type: String,
-        unique: true,
-        required: true,
+  userName: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  contact: {
+    type: Number,
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ["admin", "librarian", "user"],
+    default: "user",
+    required: true,
+  },
+  borrowedBooks: [
+    {
+      type: schema.Types.ObjectId,
+      ref: "book",
     },
-    password: {
-        type: String,
-    },
-    email: {
-        type: String,
-        unique: true,
-        required: true,
-    },
-    address: {
-        type: String,
-        required: true,
-    },
-    contact: {
-        type: Number,
-        unique: true,
-        required: true,
-    },
-    role: {
-        type: String,
-        enum: ["ADMIN", "LIBRARIAN", "USER"],
-        default: "USER",
-        required: true,
-    },
-    borrowedBooks: [{
+  ],
+  log: [
+    {
+      bookId: {
         type: schema.Types.ObjectId,
-        ref: "book"
+        required: true,
+        ref: "Book",
+      },
+      borowdDate: {
+        type: Date,
+        default: Date.now(),
+      },
+      returnDate: {
+        type: Date,
+        default: null,
+      },
+      dueDate: {
+        type: Date,
+        default: Date.now() + 7,
+      },
+      penalty: {
+        type: Number,
+        default: 0,
+      },
     },
-    ],
-
-    log: [
-        {
-            bookId: {
-                type: schema.Types.ObjectId,
-                required: true,
-                ref: "Book",
-            },
-            borowdDate: {
-                type: Date,
-                default: Date.now(),
-            },
-            returnDate: {
-                type: Date,
-                default: null,
-            },
-            dueDate: {
-                type: Date,
-                default: Date.now() + 7,
-            },
-            penalty: {
-                type: Number,
-                default: 0,
-            },
-        }
-    ]
+  ],
 });
 
 // creating the collection.

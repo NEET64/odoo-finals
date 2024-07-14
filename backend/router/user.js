@@ -11,12 +11,12 @@ const { authorization } = require("../middleware/auth");
 
 const router = express.Router();
 
-router.post("/me", authorization, async (req, res) => {
-    let user = await User.findById(req.body.userId, "-password");
+router.get("/me", authorization, async (req, res) => {
+  let user = await User.findById(req.body.userId, "-password");
 
-    res.json({
-        user,
-    });
+  res.json({
+    user,
+  });
 });
 
 module.exports = router;

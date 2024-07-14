@@ -10,6 +10,11 @@ export const userIdAtom = atom({
   default: "",
 });
 
+export const userAtom = atom({
+  key: "user",
+  default: {},
+});
+
 export const isLoggedInAtom = atom({
   key: "isLoggedIn",
   default: !!localStorage.getItem("token"),

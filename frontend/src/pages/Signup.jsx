@@ -40,7 +40,7 @@ const SignupForm = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      navigate("/books");
+      navigate("/");
     }
   }, []);
   const [isLoading, setIsLoading] = useState(false);

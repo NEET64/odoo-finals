@@ -11,14 +11,14 @@ const SearchBar = () => {
         className="relative mx-auto m-4 grow-0 flex gap-2"
         onSubmit={(e) => {
           e.preventDefault();
-          navigate(`/books?q=${search}`);
+          navigate(`/?q=${search}`);
         }}>
         <Search className="absolute left-2.5 top-2.5 h-5 w-5 dark:text-zinc-50" />
         <Input
           id="search"
           type="search"
           placeholder="Search..."
-          className=" max-w-5xl rounded-lg bg-background pl-10 pr-14 sm:w-[450px]"
+          className=" max-w-5xl rounded-lg bg-background pl-10 pr-14 sm:w-[350px]"
           onChange={(e) => {
             setSearch(e.target.value.trim());
           }}

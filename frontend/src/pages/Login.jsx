@@ -40,7 +40,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/books");
+      navigate("/");
     }
   }, []);
 
@@ -56,7 +56,7 @@ const LoginForm = () => {
         const { token } = response.data;
         localStorage.setItem("token", token);
         setIsLoggedIn(true);
-        navigate("/books");
+        navigate("/");
         return response.data.message;
       },
       error: (error) => error.response.data.message,
