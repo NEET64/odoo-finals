@@ -6,7 +6,7 @@ import { useState } from "react";
 const SearchBar = () => {
   const [search, setSearch] = useState("");
   return (
-    <div className="flex">
+    <div className="flex sm:my-8">
       <form
         className="relative mx-auto m-4 grow-0 flex gap-2"
         onSubmit={(e) => {
