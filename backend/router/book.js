@@ -12,13 +12,41 @@ router.post("/add", async (req, res) => {
         });
         await book.save();
 
-        res.status(200).json({message:"book saved successfully"});
+        res.status(200).json({ message: "book saved successfully" });
 
     } catch (error) {
         console.log(error);
-        res.status(200).json({message: error});
+        res.status(200).json({ message: error });
     }
 
 })
+
+router.get(`/all`, async (req, res) => {
+    try {
+        const apiKey = process.env.API_KEY;
+        const url = `https://www.googleapis.com/books/v1/volumes?q=a&key=${apiKey}`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const books = data.items.map(item => {
+            return {
+                title: item.volumeInfo.title,
+                authors: item.volumeInfo.authors ? item.volumeInfo.authors.join(', ') : 'Unknown',
+                publisher: item.volumeInfo.publisher || 'Unknown',
+                publishedYear: item.volumeInfo.publishedDate,
+                categories: item.volumeInfo.categories,
+                description: item.volumeInfo.description,
+                image_url: item.volumeInfo.imageLinks?.thumbnail || item.volumeInfo.imageLinks?.smallThumbnail || '',
+            };
+        });
+
+        console.log(books); // Log the extracted book data
+
+        // res.status(200).json(data);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 module.exports = router;
