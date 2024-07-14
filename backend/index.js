@@ -14,7 +14,8 @@ const router = require("./router/index");
 require("./configuration/passport");
 
 // allow access of the api
-app.use(cors({ origin: process.env.FRONTEND, credentials: true }));
+app.use(cors());
+// app.use(cors({ origin: process.env.FRONTEND, credentials: true }));
 
 // to support incoming form data in json
 app.use(express.json());
@@ -53,20 +54,28 @@ app.get("/auth/google/callback",
     }
 );
 
-app.post('/signup', passport.authenticate('local-signup'), (req, res) => {
-    if (req.user) {
-        res.status(201).json({ message: 'User created successfully!' });
-    } else {
-        res.status(400).json({ message: 'Signup failed.' });
-    }
+app.post('/signup', (req, res, next) => {
+    passport.authenticate('local-signup', { session: false }, (err, result, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!result) {
+            return res.status(400).json(info);
+        }
+        res.json(result);
+    })(req, res, next);
 });
 
-app.post('/login', passport.authenticate('local-login'), (req, res) => {
-    if (req.user) {
-        res.status(200).json({ message: 'Login successful!' });
-    } else {
-        res.status(401).json({ message: 'Login failed.' });
-    }
+app.post('/login', (req, res, next) => {
+    passport.authenticate('local-login', { session: false }, (err, result, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!result) {
+            return res.status(400).json(info);
+        }
+        res.json(result);2
+    })(req, res, next);
 });
 
 

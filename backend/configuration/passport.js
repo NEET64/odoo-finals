@@ -46,35 +46,43 @@ passport.use(new GoogleStrategy({
 
 // Local Signup Strategy
 passport.use('local-signup', new LocalStrategy({
-    usernameField: 'email', // Adjust field name if different
+    usernameField: 'email', // Assuming email is used as the username
     passwordField: 'password',
     passReqToCallback: true // Allow access to entire request object
-}, async (req, email, password, done) => {
-    try {
+}, async (req, email, password, done) => { // Correct parameter order
 
-        const existingUser = await User.findOne({ email }); // Check for existing user
+    const { userName, address, contact, role } = req.body; // Destructure parameters from req.body
+
+    try {
+        const existingUser = await User.findOne({ email });
+
         if (existingUser) {
             return done(null, false, { message: 'Email already exists.' });
         }
 
-        const saltRounds = 10; // Adjust salt rounds as needed
+        const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         const newUser = new User({
+            userName,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            address,
+            contact,
+            role,
         });
 
-        await newUser.save(); // Save user to database
+        await newUser.save();
 
         const token = generateToken(newUser);
-        return done(null, { user: newUser, token }); // User successfully signed up
+        return done(null, { user: newUser, token }); // Return user and token on successful signup
 
     } catch (err) {
         console.error('Error during local signup:', err);
-        return done(err);
+        return done(err); // Properly handle error
     }
 }));
+
 
 // Local Login Strategy (same as before)
 passport.use('local-login', new LocalStrategy({
@@ -100,18 +108,5 @@ passport.use('local-login', new LocalStrategy({
         return done(err);
     }
 }));
-
-passport.serializeUser((user, done) => {
-    done(null, user.id); // Store user ID in session
-});
-
-passport.deserializeUser(async (id, done) => {
-    try {
-        const user = await User.findById(id);
-        done(null, user);
-    } catch (err) {
-        done(err);
-    }
-});
 
 module.exports = passport;
