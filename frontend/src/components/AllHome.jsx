@@ -1,11 +1,12 @@
 import BookCard1 from "./BookCard1";
-import { books } from "../../../data/books";
+import { books as demoBooks } from "../../../data/books";
 import SearchBar from "./SearchBar";
 import BookList from "./BookList";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const AllHome = () => {
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState(demoBooks);
 
   useEffect(() => {
     axios
