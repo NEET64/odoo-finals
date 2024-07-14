@@ -37,8 +37,11 @@ router.post("/add", async (req, res) => {
 
 router.get(`/all`, async (req, res) => {
   try {
+    const { q } = req.query;
     const apiKey = process.env.API_KEY;
-    const url = `https://www.googleapis.com/books/v1/volumes?q=a&key=${apiKey}`;
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${
+      q || "a"
+    }&key=${apiKey}`;
 
     const response = await fetch(url);
     const data = await response.json();

@@ -2,8 +2,20 @@ import BookCard1 from "./BookCard1";
 import { books } from "../../../data/books";
 import SearchBar from "./SearchBar";
 import BookList from "./BookList";
+import { useEffect, useState } from "react";
 
 export const AllHome = () => {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/v1/book/library`)
+      .then((response) => {
+        setBooks(response.data);
+        console.log(response.data);
+      });
+  }, []);
+
   return (
     <>
       <SearchBar />
