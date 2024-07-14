@@ -1,7 +1,5 @@
-import { Search } from "lucide-react";
-import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isLoggedInAtom } from "@/atoms/userData";
 import { useRecoilValue } from "recoil";
 
@@ -19,8 +17,12 @@ const Header = () => {
           <Button>Logout</Button>
         ) : (
           <>
-            <Button>Login</Button>
-            <Button>Sign Up</Button>
+            <Button>
+              <Link to="/login">Login</Link>
+            </Button>
+            <Button>
+              <Link to="/signup">Sign Up</Link>
+            </Button>
           </>
         )}
       </div>

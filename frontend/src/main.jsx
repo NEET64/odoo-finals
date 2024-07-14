@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { RecoilRoot } from "recoil";
 import HomePage from "./pages/HomePage.jsx";
 import LoginForm from "./pages/Login.jsx";
+import SignupForm from "./pages/Signup.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginForm />,
+      },
+      {
+        path: "/signup",
+        element: <SignupForm />,
       },
     ],
   },

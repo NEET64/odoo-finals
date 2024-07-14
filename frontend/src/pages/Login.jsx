@@ -66,7 +66,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="grid items-center p-4 pt-8 dark:bg-zinc-950">
+      <div className="grid items-center p-4 flex-1 dark:bg-zinc-950">
         <Card className="mx-auto max-w-sm">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -125,6 +125,10 @@ const LoginForm = () => {
                       Login
                     </Button>
                   )}
+
+                  <Button type="submit" variant="outline" className="w-full">
+                    Sign in with Google
+                  </Button>
                 </div>
                 <div className="mt-4 text-center text-sm">
                   Don&apos;t have an account?{" "}
