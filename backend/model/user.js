@@ -1,4 +1,3 @@
-// importing the mongoose.
 const mongoose = require("mongoose");
 
 // importing the review.
@@ -40,6 +39,32 @@ const userSchema = new schema({
         ref: "book"
     },
     ],
+
+    log: [
+        {
+            bookId: {
+                type: schema.Types.ObjectId,
+                required: true,
+                ref: "Book",
+            },
+            borowdDate: {
+                type: Date,
+                default: Date.now(),
+            },
+            returnDate: {
+                type: Date,
+                default: null,
+            },
+            dueDate: {
+                type: Date,
+                default: Date.now() + 7,
+            },
+            penalty: {
+                type: Number,
+                default: 0,
+            },
+        }
+    ]
 });
 
 // creating the collection.
