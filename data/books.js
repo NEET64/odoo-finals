@@ -1,4 +1,4 @@
-export default books = [
+export const books = [
   {
     title: "To Kill a Mockingbird",
     author: "Harper Lee",
