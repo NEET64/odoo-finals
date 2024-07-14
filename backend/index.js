@@ -1,14 +1,16 @@
-require("dotenv").config();
 const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
+dotenv.config();
+const passport = require("passport");
+const session = require("express-session");
 const port = process.env.PORT || 3000;
 
 const connectDB = require("./configuration/connection");
 
 const cors = require("cors");
 
-const bookRouter = require("./router/book");
-const userRouter = require("./router/user");
+const router = require("./router/index");
 
 // allow access of the api
 app.use(cors({ origin: process.env.FRONTEND }));
@@ -22,7 +24,7 @@ const path = require("path");
 app.use("/public", express.static(path.join(__dirname, "./public")));
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/users", userRouter);
+app.use("/v1", router);
 
 app.get("/", (req, res) => {
     res.json({
@@ -37,6 +39,10 @@ app.use((err, req, res, next) => {
         message: message,
     });
 });
+
+app.post("/login", )
+
+
 
 // setting up http server at port
 app.listen(port, () => {
