@@ -43,7 +43,7 @@ const userSchema = new schema({
     log: [
         {
             bookId: {
-                type: Schema.Types.ObjectId,
+                type: schema.Types.ObjectId,
                 required: true,
                 ref: "Book",
             },

@@ -2,6 +2,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt'); // For password hashing
+const jwt = require("jsonwebtoken");
 
 // User model (replace with your actual database interaction)
 const User = require('../model/user'); // Adjust path as needed
@@ -13,6 +14,10 @@ const createUserObject = (profile) => {
         name: profile.displayName,
         picture: profile.photos[0].value,
     };
+};
+
+const generateToken = (user) => {
+    return jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
 // Google authentication
@@ -30,7 +35,9 @@ passport.use(new GoogleStrategy({
             await user.save();
         }
 
-        return done(null, user);
+        const token = generateToken(user);
+        return done(null, { user, token });
+
     } catch (error) {
         console.error('Error during Google authentication:', error);
         return done(error, null);
@@ -60,7 +67,9 @@ passport.use('local-signup', new LocalStrategy({
 
         await newUser.save(); // Save user to database
 
-        return done(null, newUser); // User successfully signed up
+        const token = generateToken(newUser);
+        return done(null, { user: newUser, token }); // User successfully signed up
+
     } catch (err) {
         console.error('Error during local signup:', err);
         return done(err);
@@ -74,17 +83,19 @@ passport.use('local-login', new LocalStrategy({
 }, async (email, password, done) => {
     try {
 
-        const user = await User.findOne({ email }); 
+        const user = await User.findOne({ email });
         if (!user) {
             return done(null, false, { message: 'Incorrect email or password.' });
         }
 
-        const isMatch = bcrypt.compare(password, user.password); 
+        const isMatch = bcrypt.compare(password, user.password);
         if (!isMatch) {
             return done(null, false, { message: 'Incorrect email or password.' });
         }
 
-        return done(null, user); // User successfully authenticated
+        const token = generateToken(user);
+        return done(null, { user, token }); // User successfully authenticated
+
     } catch (err) {
         return done(err);
     }
