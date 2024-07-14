@@ -100,7 +100,11 @@ passport.use(
           .setIssuedAt();
         const token = await signer.sign(secretBytes);
 
-        return done(null, { user: newUser, token: token }); // Return user and token on successful signup
+        return done(null, {
+          user: newUser,
+          token: token,
+          message: "Signup successful",
+        }); // Return user and token on successful signup
       } catch (err) {
         console.error("Error during local signup:", err);
         return done(err); // Properly handle error

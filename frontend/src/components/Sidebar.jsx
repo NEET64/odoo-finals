@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-
+import { LuBookPlus } from "react-icons/lu";
 import { BookOpen, Heart, Home, LogIn, LogOut, Users2 } from "lucide-react";
 import {
   Tooltip,
@@ -67,18 +67,18 @@ const Sidebar = () => {
           <Tooltip>
             <TooltipTrigger>
               <NavLink
-                to="favourites"
+                to="addbook"
                 end
                 className={({ isActive }) =>
                   isActive
                     ? "flex items-center justify-center rounded-lg h-10 w-10 hover:bg-slate-200 transition-colors bg-slate-200 dark:bg-zinc-800 dark:text-zinc-50"
                     : "flex items-center justify-center rounded-lg h-10 w-10 border border-slate-200 hover:bg-slate-200 transition-colors bg-white dark:bg-zinc-950 dark:text-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-800"
                 }>
-                <Heart className="h-5 w-5" />
-                <span className="sr-only">Favourites</span>
+                <LuBookPlus className="h-5 w-5" />
+                <span className="sr-only">Add Books</span>
               </NavLink>
             </TooltipTrigger>
-            <TooltipContent side="right">Favourites</TooltipContent>
+            <TooltipContent side="right">Add Books</TooltipContent>
           </Tooltip>
         </TooltipProvider>
 
