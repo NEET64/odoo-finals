@@ -83,4 +83,12 @@ router.get("/library", async (req, res) => {
   }
 });
 
+router.delete("/bin/:id", async (req, res) => {
+  let id = req.params.id;
+  console.log(id);
+  await Book.findByIdAndDelete(id);
+
+  res.status(200).json({ message: "book successfully deleted." });
+});
+
 module.exports = router;

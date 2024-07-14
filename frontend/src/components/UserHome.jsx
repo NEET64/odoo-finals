@@ -6,11 +6,12 @@ import BookList from "./BookList";
 import { books as demoBooks } from "../../../data/books";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { set } from "zod";
 
 const UserHome = () => {
   const user = useRecoilValue(userAtom);
   const [books, setBooks] = useState(demoBooks);
-
+  const [counter, setCounter] = useState(0);
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/v1/book/library`)
@@ -20,7 +21,7 @@ const UserHome = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [counter]);
 
   return (
     <>
@@ -28,7 +29,11 @@ const UserHome = () => {
         <div className="col-span-2">
           <SearchBar />
           <div className="max-w-lg grid items-center gap-2 ml-40">
-            <BookList books={books} />
+            <BookList
+              books={books}
+              handleReloadset={setCounter}
+              handleReloadval={counter}
+            />
           </div>
         </div>
         <div className="my-8">

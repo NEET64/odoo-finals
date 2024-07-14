@@ -1,4 +1,32 @@
-const BookCard1 = ({ book }) => {
+import { userRoleAtom } from "@/atoms/userData";
+import { Button } from "./ui/button";
+import { useRecoilValue } from "recoil";
+import { toast } from "sonner";
+import axios from "axios";
+
+const BookCard1 = ({ book, parentReloadset, parentReloadval }) => {
+  const userRole = useRecoilValue(userRoleAtom);
+  console.log(book);
+  const handleDeleteBook = () => {
+    const promise = axios
+      .delete(`${import.meta.env.VITE_BACKEND_URL}/v1/book/bin/${book._id}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    toast.promise(promise, {
+      loading: "Loading...",
+      success: (response) => {
+        parentReloadset(parentReloadval + 1);
+        return "Delete succesfull";
+      },
+      error: (error) => "Something went wrong",
+    });
+  };
+
   return (
     <div className="grid grid-cols-4 gap-2">
       <img
@@ -14,6 +42,14 @@ const BookCard1 = ({ book }) => {
         <p className="text-sm line-clamp-2 text-slate-600">
           {book.description}
         </p>
+        {userRole === "librarian" && (
+          <Button
+            variant="destructive"
+            className="block w-fit"
+            onClick={handleDeleteBook}>
+            Delete
+          </Button>
+        )}
       </div>
     </div>
   );
