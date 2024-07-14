@@ -69,10 +69,10 @@ router.get(`/all`, async (req, res) => {
 router.get("/library", async (req, res) => {
     try {
         const data = await Book.find();
-        res.status(200).json(data, { message: "Successfully loaded the library data" })
+        res.status(200).json({ data ,message: "Successfully loaded the library data" })
     } catch (error) {
         console.log(error);
-        res.status(200).json(data, { message: "something went wrong!" });
+        res.status(200).json(data, { data, message: "something went wrong!" });
     }
 })
 
