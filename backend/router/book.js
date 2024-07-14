@@ -18,13 +18,16 @@ router.post("/add", async (req, res) => {
         console.log(error);
         res.status(200).json({ message: error });
     }
-
+    a
 })
 
 router.get(`/all`, async (req, res) => {
     try {
+
+        const { q } = req.query;
+
         const apiKey = process.env.API_KEY;
-        const url = `https://www.googleapis.com/books/v1/volumes?q=a&key=${apiKey}`;
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${q | 'a'}&key=${apiKey}`;
 
         const response = await fetch(url);
         const data = await response.json();
@@ -32,6 +35,7 @@ router.get(`/all`, async (req, res) => {
         const books = data.items.map(item => {
             return {
                 title: item.volumeInfo.title,
+                id: item.id,
                 authors: item.volumeInfo.authors ? item.volumeInfo.authors.join(', ') : 'Unknown',
                 publisher: item.volumeInfo.publisher || 'Unknown',
                 publishedYear: item.volumeInfo.publishedDate,
@@ -41,11 +45,10 @@ router.get(`/all`, async (req, res) => {
             };
         });
 
-        console.log(books); // Log the extracted book data
-
-        // res.status(200).json(data);
+        res.status(200).json(books);
     } catch (error) {
         console.log(error);
+        res.status(200).json({ message: "book didn't get received.." });
     }
 });
 
